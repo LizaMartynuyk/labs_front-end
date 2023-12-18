@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colorful Table</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        td {
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        #colorPickerContainer {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+
+<table id="colorfulTable">
+    <!-- Table content will be generated dynamically using JavaScript -->
+</table>
+
+<div id="colorPickerContainer">
+    <label for="colorPicker">Choose a color: </label>
+    <input type="color" id="colorPicker">
+</div>
+
+<script>
+    // Function to generate a random color in hex format
+    function getRandomColor() {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    // Function to change the color of the clicked cell to a selected color
+    function changeColorOnClick(event) {
+        const colorPickerContainer = document.getElementById('colorPickerContainer');
+        const colorPicker = document.getElementById('colorPicker');
+        colorPickerContainer.style.display = 'block';
+
+        colorPicker.addEventListener('input', function () {
+            event.target.style.backgroundColor = colorPicker.value;
+            colorPickerContainer.style.display = 'none';
+        }, { once: true });
+    }
+
+    // Function to change the color of cells in the diagonal
+    function changeColorOnDoubleClick(event) {
+        const table = document.getElementById('colorfulTable');
+        const cells = table.getElementsByTagName('td');
+        const cellIndex = event.target.cellIndex;
+        const rowIndex = event.target.parentNode.rowIndex;
+
+        if (parseInt(event.target.textContent) === 4) {
+            // Display the color picker
+            const colorPickerContainer = document.getElementById('colorPickerContainer');
+            const colorPicker = document.getElementById('colorPicker');
+            colorPickerContainer.style.display = 'block';
+
+            colorPicker.addEventListener('input', function () {
+                colorPickerContainer.style.display = 'none';
+            }, { once: true });
+
+            // Change the color of cells (6, 11, 16, 21, 26, 31)
+            const indicesToChange = [6, 11, 16, 21, 26, 31];
+            indicesToChange.forEach(index => {
+                cells[index - 1].style.backgroundColor = getRandomColor();
+            });
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const table = document.getElementById('colorfulTable');
+        const numRows = 6;
+        const numCols = 6;
+
+        // Create the table and populate it with numbers
+        for (let i = 0; i < numRows; i++) {
+            const row = table.insertRow(i);
+            for (let j = 0; j < numCols; j++) {
+                const cell = row.insertCell(j);
+                cell.textContent = i * numCols + j + 1;
+
+                // Add event listeners to cells
+                cell.addEventListener('mouseover', function (event) {
+                    if (parseInt(event.target.textContent) === 4) {
+                        event.target.style.backgroundColor = getRandomColor();
+                    }
+                });
+
+                cell.addEventListener('click', changeColorOnClick);
+                cell.addEventListener('dblclick', changeColorOnDoubleClick);
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
+
