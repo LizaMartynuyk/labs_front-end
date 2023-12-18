@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="text/javascript" src="script.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <title>Form Validation</title>
+</head>
+<body>
+    <div class="container">
+        <form  class="form">
+            <h1 class="form_title">Введіть дані</h1>
+            <p>
+                <input type="text" name="name" class="form_input name" placeholder="ПІБ">
+            </p>
+            <p>
+                <input type="text" name="card" class="form_input card" placeholder="Паспорт">
+            </p>
+            <p>
+                <input type="text" name="faculty" class="form_input faculty" placeholder="Факультет">
+            </p>
+            <p>
+                <input type="text" name="data" class="form_input data" placeholder="Дата народження">
+            </p>
+            <p>
+                <input type="text" name="city" class="form_input city" placeholder="Місто">
+            </p>
+            <p>
+                <button  type="button" class="form_btn" onclick="validateForm()">Підтвердити</button> 
+            </p>
+        </form>
+    </div>
+    
+    <div id="outputContainer"></div>
+</body>
