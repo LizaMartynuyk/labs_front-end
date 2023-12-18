@@ -1,0 +1,12 @@
+#myImage {
+  max-width: 100%;
+  height: auto;
+}
+
+#imageActions {
+  margin-top: 10px;
+}
+
+.myElement2 {
+  cursor: pointer;
+}
