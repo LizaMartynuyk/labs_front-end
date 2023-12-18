@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laba6</title>
+    <style>
+        #savedUsers {
+            list-style: none;
+            padding: 0;
+        }
+
+        #savedUsers li {
+            display: inline-block;
+            margin: 10px;
+        }
+
+        #savedUsers img {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Random User Information</h1>
+    <button onclick="fetchUserData()">Get Random User</button>
+    <button onclick="saveUserData()">Save User</button>
+    <div id="userInfo"></div>
+    <h2>Saved Users</h2>
+    <ul id="savedUsers"></ul>
+
+    <script>
+        let currentUser;
+
+        function fetchUserData() {
+            fetch('https://randomuser.me/api')
+                .then(response => response.json())
+                .then(data => {
+                    currentUser = data.results[0];
+
+                    const userInfo = document.getElementById('userInfo');
+                    userInfo.innerHTML = `
+                        <img src="${currentUser.picture.large}" alt="User Picture">
+                        <p>Name: ${currentUser.name.first} ${currentUser.name.last}</p>
+                        <p>City: ${currentUser.location.city}</p>
+                        <p>Postcode: ${currentUser.location.postcode}</p>
+                        <p>Phone: ${currentUser.phone}</p>
+                    `;
+                })
+                .catch(error => console.error('Error fetching user data:', error));
+        }
+
+        function saveUserData() {
+            if (currentUser) {
+                const savedUsersList = document.getElementById('savedUsers');
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    <img src="${currentUser.picture.thumbnail}" alt="User Picture">
+                    <div>
+                        <p>Name: ${currentUser.name.first} ${currentUser.name.last}</p>
+                        <p>City: ${currentUser.location.city}</p>
+                        <p>Postcode: ${currentUser.location.postcode}</p>
+                        <p>Phone: ${currentUser.phone}</p>
+                    </div>
+                `;
+                savedUsersList.appendChild(listItem);
+            } else {
+                alert('No user data to save.');
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+
